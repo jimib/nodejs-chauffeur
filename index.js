@@ -1,6 +1,19 @@
 module.exports = function(app, cb){
 	var routes = {};
 	
+	//need to handle paths without a trailing slash - as chauffeur adds them by default
+	app.all("*", function(req, res, next){
+		var indexOfLastSlash = req.path.lastIndexOf("/");
+		//check if the last character is a slash
+		//is there an extension/path between the last slash and the end
+		//it's not an asset - e.g. no extension such as favicon.ico
+		if(indexOfLastSlash != req.path.length - 1 && req.path.indexOf(".", indexOfLastSlash) == -1){
+			res.redirect(req.path + "/");	
+		}else{
+			next();
+		}
+	});
+	
 	//create the mapper passing the routes object that we want built up
 	var mapper = new Mapper(app, "", routes);
 	
