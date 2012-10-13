@@ -1,6 +1,9 @@
 {
   "name": "chauffeur",
   "description": "Wrapper for constructing routes",
-  "version": "0.0.1",
-  "author": "jimib <jimi.bailey@gmail.com>"
+  "version": "0.0.2",
+  "author": {
+    "name": "jimib",
+    "email": "jimi.bailey@gmail.com"
+  }
 }

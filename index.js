@@ -31,6 +31,7 @@ function Mapper(app, rootPath,routes){
 		//implement the route
 		app[method](path, controller);
 	
+		console.log("createRoute: ", path);
 		if(id){//make note of the route we just formed
 			checkRoute(id);
 			routes[id] = path;
@@ -41,10 +42,11 @@ function Mapper(app, rootPath,routes){
 		if(routes[id] != undefined)console.log("warning: route with id '"+id+"' already exists");
 	}
 	
-	function createNameSpace(id){
+	function createNameSpace(id, path){
 		checkRoute(id);
+		path = path || id;
 		routes[id] = {};
-		return new Mapper(app, createFullPath(rootPath, id), routes[id]);
+		return new Mapper(app, createFullPath(rootPath, path), routes[id]);
 	}
 
 	return {
@@ -53,9 +55,14 @@ function Mapper(app, rootPath,routes){
 		put : function(path, controller, id){createRoute("put", path, controller, id);},
 		delete : function(path, controller, id){createRoute("delete", path, controller, id);},
 		all : function(path, controller, id){createRoute("all", path, controller, id);},
-		namespace : function(id, cb){
+		namespace : function(path, id, cb){
+			if(typeof id == "function"){
+				cb = id;
+				id = path;
+			}
+			console.log("namespace: ", path, id);
 			//create a new mapper
-			var mapper = createNameSpace(id);
+			var mapper = createNameSpace(id, path);
 			cb = typeof cb == 'function' ? cb : function(){};
 			cb(mapper);
 		},
@@ -84,14 +91,30 @@ function Mapper(app, rootPath,routes){
 function createFullPath(pathA, pathB){
 	//eliminate trailing '/' from pathA
 	//eliminate leading '/' from pathA
-	return stripTrailingSlash(pathA) + "/" + stripLeadingSlash(pathB);
+	pathA = stripEncasingSlash(pathA);
+	pathB = stripEncasingSlash(pathB);
+	
+	var path = "/";
+	if(pathA && pathA.length > 0){
+		path += pathA + "/";
+	}
+	
+	if(pathB && pathB.length > 0){	
+	 	path += pathB + "/";
+	}
+	
+	return path;
+}
+
+function stripEncasingSlash(path){
+	return stripTrailingSlash(stripLeadingSlash(path));
 }
 
 function stripTrailingSlash(path){
 	var p = path ? path.toString() : "";
-	if(p.length > 0 && p.charAt(p.length - 1) == '/'){
+	if(p.length > 0 && p.charAt(p.length - 1) == '\/'){
 		//drop it
-		p = p.substr(0, p.length - 2);
+		p = p.substr(0, p.length - 1);
 	}
 	return p;
 }
