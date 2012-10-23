@@ -31,7 +31,6 @@ function Mapper(app, rootPath,routes){
 		//implement the route
 		app[method](path, controller);
 	
-		console.log("createRoute: ", path);
 		if(id){//make note of the route we just formed
 			checkRoute(id);
 			routes[id] = path;
@@ -107,7 +106,7 @@ function createFullPath(pathA, pathB){
 }
 
 function stripEncasingSlash(path){
-	return stripTrailingSlash(stripLeadingSlash(path));
+	return stripTrailingSlash(stripLeadingSlash(paths));
 }
 
 function stripTrailingSlash(path){
