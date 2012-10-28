@@ -106,7 +106,7 @@ function createFullPath(pathA, pathB){
 }
 
 function stripEncasingSlash(path){
-	return stripTrailingSlash(stripLeadingSlash(paths));
+	return stripTrailingSlash(stripLeadingSlash(path));
 }
 
 function stripTrailingSlash(path){
