@@ -59,7 +59,7 @@ function Mapper(app, rootPath,routes){
 				cb = id;
 				id = path;
 			}
-			console.log("namespace: ", path, id);
+			//console.log("namespace: ", path, id);
 			//create a new mapper
 			var mapper = createNameSpace(id, path);
 			cb = typeof cb == 'function' ? cb : function(){};
