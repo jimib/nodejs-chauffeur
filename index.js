@@ -88,21 +88,22 @@ function Mapper(app, rootPath,routes){
 
 //general helper methods
 function createFullPath(pathA, pathB){
+	var path = require("path");
 	//eliminate trailing '/' from pathA
 	//eliminate leading '/' from pathA
 	pathA = stripEncasingSlash(pathA);
 	pathB = stripEncasingSlash(pathB);
 	
-	var path = "/";
+	var fullPath = "/";
 	if(pathA && pathA.length > 0){
-		path += pathA + "/";
+		fullPath = path.join(fullPath, pathA);
 	}
 	
 	if(pathB && pathB.length > 0){	
-	 	path += pathB + "/";
+	 	fullPath = path.join(fullPath, pathB);
 	}
 	
-	return path;
+	return fullPath;
 }
 
 function stripEncasingSlash(path){
