@@ -2,6 +2,8 @@ module.exports = function(app, cb){
 	var routes = {};
 	
 	//need to handle paths without a trailing slash - as chauffeur adds them by default
+	//REMOVING AS ALWAYS CAUSES PROBLEMS
+	/*
 	app.all("*", function(req, res, next){
 		var indexOfLastSlash = req.path.lastIndexOf("/");
 		//check if the last character is a slash
@@ -13,6 +15,7 @@ module.exports = function(app, cb){
 			next();
 		}
 	});
+	*/
 	
 	//create the mapper passing the routes object that we want built up
 	var mapper = new Mapper(app, "", routes);
