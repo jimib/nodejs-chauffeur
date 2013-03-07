@@ -47,8 +47,7 @@ function Mapper(app, rootPath,routes){
 	function createNameSpace(id, path){
 		checkRoute(id);
 		path = path || id;
-		routes[id] = {};
-		return new Mapper(app, createFullPath(rootPath, path), routes[id]);
+		return new Mapper(app, createFullPath(rootPath, path), routes);
 	}
 
 	return {
